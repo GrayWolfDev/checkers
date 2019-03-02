@@ -1,0 +1,466 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+		<style>
+			.mydiv {
+				position: absolute;
+				z-index: 9;
+				background-color: #cc2a2a;
+				border: 1px solid #7e0101;
+				border-radius: 50%;
+				width: 60px;
+				height: 60px;
+				text-align: center;
+			}
+			.mydivBlack {
+				position: absolute;
+				z-index: 9;
+				background-color: #000000;
+				border: 1px solid #000000;
+				border-radius: 50%;
+				width: 60px;
+				height: 60px;
+				text-align: center;
+			}
+      
+			#mydivheader {
+				padding: 10px;
+				cursor: move;
+				z-index: 10;
+				background-color: #2196F3;
+				color: #fff;
+			 }
+    </style>
+    </head>
+    <body>
+		<!-- Draggable DIV Red-->
+		<div class="mydiv" id="1" upLeftId="0" upRightId="0" downLeftId="0" downRightId="82-82" style="top: 12px; left: 12px;"></div>
+		<div class="mydiv" id="2" upLeftId="0" upRightId="0" downLeftId="12-152" downRightId="152-152" style="top: 82px; left: 82px;"></div>
+		<div class="mydiv" id="3" upLeftId="0" upRightId="0" downLeftId="82-82" downRightId="222-82" style="top: 12px; left: 152px;"></div>
+		<div class="mydiv" id="4" upLeftId="0" upRightId="0" downLeftId="152-152" downRightId="292-152" style="top: 82px; left: 222px;"></div>
+		<div class="mydiv" id="5" upLeftId="0" upRightId="0" downLeftId="222-82" downRightId="362-82" style="top: 12px; left: 292px;"></div>
+		<div class="mydiv" id="6" upLeftId="0" upRightId="0" downLeftId="292-152" downRightId="432-152" style="top: 82px; left: 362px;"></div>
+		<div class="mydiv" id="7" upLeftId="0" upRightId="0" downLeftId="362-82" downRightId="502-82" style="top: 12px; left: 432px;"></div>
+		<div class="mydiv" id="8" upLeftId="0" upRightId="0" downLeftId="432-152" downRightId="222-82" style="top: 82px; left: 502px;"></div>
+		
+		<!-- Draggable DIV black-->
+		<div class="mydivBlack" id="1b" upLeftId="432-432" upRightId="0" downLeftId="0" downRightId="0" style="top: 502px; left: 502px;"></div>
+		<div class="mydivBlack" id="2b" upLeftId="362-362" upRightId="502-362" downLeftId="362-502" downRightId="502-502" style="top: 432px; left: 432px;"></div>
+		<div class="mydivBlack" id="3b" upLeftId="292-432" upRightId="432-432" downLeftId="0" downRightId="0"" style="top: 502px; left: 362px;"></div>
+		<div class="mydivBlack" id="4b" upLeftId="222-362" upRightId="362-362" downLeftId="222-502" downRightId="362-502" style="top: 432px; left: 292px;"></div>
+		<div class="mydivBlack" id="5b" upLeftId="152-432" upRightId="292-432" downLeftId="0" downRightId="0" style="top: 502px; left: 222px;"></div>
+		<div class="mydivBlack" id="6b" upLeftId="82-362" upRightId="222-362" downLeftId="82-502" downRightId="222-502" style="top: 432px; left: 152px;"></div>
+		<div class="mydivBlack" id="7b" upLeftId="12-432" upRightId="152-432" downLeftId="0" downRightId="0" style="top: 502px; left: 82px;"></div>
+		<div class="mydivBlack" id="8b" upLeftId="0" upRightId="82-362" downLeftId="0" downRightId="82-502" style="top: 432px; left: 12px;"></div>
+
+	  
+		<div id="container"></div>
+		<div id="textContainer"></div>
+        <script type="text/babel">
+
+            class BoardItem extends React.Component {
+                render() {
+                    var blackSquare = {
+                        width: "70px",
+                        height: "70px",
+                        backgroundColor: "#72A172"
+                    }
+					var yellowSquare = {
+                        width: "70px",
+                        height: "70px",
+                        backgroundColor: "#FFFF00"
+                    }
+                    var whiteSquare = {
+                        width: "70px",
+                        height: "70px",
+                        backgroundColor: "white"
+                    }
+                    if (this.props.squareColor == "black")
+                        return <div id={this.props.id} style={blackSquare} idpiece={this.props.idpiece}></div>;
+                    else
+                    	return <div id={this.props.id} style={whiteSquare} idpiece={this.props.idpiece}></div>;
+                }
+            }
+            class Board extends React.Component {
+                render() {
+                    var gridContainer = {
+						position: "absolute",
+                        display: "grid",
+						gridTemplateColumns: "auto auto auto auto auto auto auto auto",
+						width: "560px",
+						
+                    }
+                    return (
+                        <div style={gridContainer}>
+                            <BoardItem id="12-12" squareColor="black" idpiece="1"></BoardItem>
+                            <BoardItem id="82-12" squareColor="white"></BoardItem>
+                            <BoardItem id="152-12" squareColor="black" idpiece="3"></BoardItem>
+                            <BoardItem id="222-12" squareColor="white"></BoardItem>
+                            <BoardItem id="292-12" squareColor="black" idpiece="5"></BoardItem>
+                            <BoardItem id="362-12" squareColor="white"></BoardItem>
+                            <BoardItem id="432-12" squareColor="black" idpiece="7"></BoardItem>
+                            <BoardItem id="502-12" squareColor="white"></BoardItem>
+							
+							<BoardItem id="12-82" squareColor="white"></BoardItem>
+                            <BoardItem id="82-82" squareColor="black" idpiece="2"></BoardItem>
+                            <BoardItem id="152-82" squareColor="white"></BoardItem>
+                            <BoardItem id="222-82" squareColor="black" idpiece="4"></BoardItem>
+                            <BoardItem id="292-82" squareColor="white"></BoardItem>
+							<BoardItem id="362-82" squareColor="black" idpiece="6"></BoardItem>
+                            <BoardItem id="432-82" squareColor="white"></BoardItem>
+                            <BoardItem id="502-82" squareColor="black" idpiece="8"></BoardItem>
+							
+							<BoardItem id="12-152" squareColor="black" idpiece="-1"></BoardItem>
+                            <BoardItem id="82-152" squareColor="white"></BoardItem>
+                            <BoardItem id="152-152" squareColor="black" idpiece="-1"></BoardItem>
+                            <BoardItem id="222-152" squareColor="white"></BoardItem>
+                            <BoardItem id="292-152" squareColor="black" idpiece="-1"></BoardItem>
+                            <BoardItem id="362-152" squareColor="white"></BoardItem>
+                            <BoardItem id="432-152" squareColor="black" idpiece="-1"></BoardItem>
+                            <BoardItem id="502-152" squareColor="white"></BoardItem>
+							
+							<BoardItem id="12-222" squareColor="white"></BoardItem>
+                            <BoardItem id="82-222" squareColor="black" idpiece="-1"></BoardItem>
+                            <BoardItem id="152-222" squareColor="white"></BoardItem>
+                            <BoardItem id="222-222" squareColor="black" idpiece="-1"></BoardItem>
+                            <BoardItem id="292-222" squareColor="white"></BoardItem>
+							<BoardItem id="362-222" squareColor="black" idpiece="-1"></BoardItem>
+                            <BoardItem id="432-222" squareColor="white"></BoardItem>
+                            <BoardItem id="502-222" squareColor="black" idpiece="-1"></BoardItem>
+							
+							<BoardItem id="12-292" squareColor="black" idpiece="-1"></BoardItem>
+                            <BoardItem id="82-292" squareColor="white"></BoardItem>
+                            <BoardItem id="152-292" squareColor="black" idpiece="-1"></BoardItem>
+                            <BoardItem id="222-292" squareColor="white"></BoardItem>
+                            <BoardItem id="292-292" squareColor="black" idpiece="-1"></BoardItem>
+                            <BoardItem id="362-292" squareColor="white"></BoardItem>
+                            <BoardItem id="432-292" squareColor="black" idpiece="-1"></BoardItem>
+                            <BoardItem id="502-292" squareColor="white"></BoardItem>
+			
+							<BoardItem id="12-362" squareColor="white"></BoardItem>
+                            <BoardItem id="82-362" squareColor="black" idpiece="-1"></BoardItem>
+                            <BoardItem id="152-362" squareColor="white"></BoardItem>
+                            <BoardItem id="222-362" squareColor="black" idpiece="-1"></BoardItem>
+                            <BoardItem id="292-362" squareColor="white"></BoardItem>
+							<BoardItem id="362-362" squareColor="black" idpiece="-1"></BoardItem>
+                            <BoardItem id="432-362" squareColor="white"></BoardItem>
+                            <BoardItem id="502-362" squareColor="black" idpiece="-1"></BoardItem>
+							
+							<BoardItem id="12-432" squareColor="black" idpiece="8b"></BoardItem>
+                            <BoardItem id="82-432" squareColor="white"></BoardItem>
+                            <BoardItem id="152-432" squareColor="black" idpiece="6b"></BoardItem>
+                            <BoardItem id="222-432" squareColor="white"></BoardItem>
+                            <BoardItem id="292-432" squareColor="black" idpiece="4b"></BoardItem>
+                            <BoardItem id="362-432" squareColor="white"></BoardItem>
+                            <BoardItem id="432-432" squareColor="black" idpiece="2b"></BoardItem>
+                            <BoardItem id="502-432" squareColor="white"></BoardItem>
+							
+							<BoardItem id="12-502" squareColor="white"></BoardItem>
+                            <BoardItem id="82-502" squareColor="black" idpiece="7b"></BoardItem>
+                            <BoardItem id="152-502" squareColor="white"></BoardItem>
+                            <BoardItem id="222-502" squareColor="black" idpiece="5b"></BoardItem>
+                            <BoardItem id="292-502" squareColor="white"></BoardItem>
+							<BoardItem id="362-502" squareColor="black" idpiece="3b"></BoardItem>
+                            <BoardItem id="432-502" squareColor="white"></BoardItem>
+                            <BoardItem id="502-502" squareColor="black" idpiece="1b"></BoardItem>
+                        </div>
+                    )
+                }
+            }
+            ReactDOM.render(
+                <div>
+                    <Board/>
+                </div>,
+                document.querySelector("#container")
+            );
+		</script>
+		<script>
+
+			var correctSquareI = 0;
+			var correctSquareJ = 0;
+			
+			var originalPos1 = 0;
+			var originalPos2 = 0;
+			
+			var squareClickedID = 0;
+			var pieceToRemove;
+			var pieceToRemoveUpRight;
+
+			// Make the DIV element draggable:
+			dragElement(document.getElementById("1"));
+			dragElement(document.getElementById("2"));
+			dragElement(document.getElementById("3"));
+			dragElement(document.getElementById("4"));
+			dragElement(document.getElementById("5"));
+			dragElement(document.getElementById("6"));
+			dragElement(document.getElementById("7"));
+			dragElement(document.getElementById("8"));
+			dragElement(document.getElementById("1b"));
+			dragElement(document.getElementById("2b"));
+			dragElement(document.getElementById("3b"));
+			dragElement(document.getElementById("4b"));
+			dragElement(document.getElementById("5b"));
+			dragElement(document.getElementById("6b"));
+			dragElement(document.getElementById("7b"));
+			dragElement(document.getElementById("8b"));
+
+			function dragElement(elmnt) {
+				
+				var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+				if (document.getElementById(elmnt.id + "header")) {
+					// if present, the header is where you move the DIV from:
+					document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+				} else {
+					// otherwise, move the DIV from anywhere inside the DIV: 
+					elmnt.onmousedown = dragMouseDown;
+				}
+
+				function dragMouseDown(e) {
+					originalPos1 = elmnt.style.top;
+					originalPos2 = elmnt.style.left;
+					originalSquarex = elmnt.offsetLeft;
+					originalSquarey = elmnt.offsetTop;
+					squareClickedID = document.getElementById("" + elmnt.offsetLeft + "-" + elmnt.offsetTop).id;
+					
+
+					// get pieces to remove if they are jumped over
+					if (elmnt.getAttribute("upLeftId") != 0) {
+						pieceToRemove = document.getElementById("" + document.getElementById("" + elmnt.getAttribute("upLeftId")).getAttribute("idpiece"));
+					}
+					if (elmnt.getAttribute("upRightId") != 0) {
+						pieceToRemoveUpRight = document.getElementById("" + document.getElementById("" + elmnt.getAttribute("upRightId")).getAttribute("idpiece"));
+					}
+					if (elmnt.getAttribute("downLeftId") != 0) {
+						pieceToRemoveDownLeft = document.getElementById("" + document.getElementById("" + elmnt.getAttribute("downLeftId")).getAttribute("idpiece"));
+					}
+					if (elmnt.getAttribute("downRightId") != 0) {
+						pieceToRemoveDownRight = document.getElementById("" + document.getElementById("" + elmnt.getAttribute("downRightId")).getAttribute("idpiece"));
+					}
+					e = e || window.event;
+					e.preventDefault();
+					// get the mouse cursor position at startup:
+					pos3 = e.clientX;
+					pos4 = e.clientY;
+					document.onmouseup = closeDragElement;
+					elmnt.style.zIndex = 100;
+					// call a function whenever the cursor moves:
+					document.onmousemove = elementDrag;
+				}
+
+				function elementDrag(e) {
+					e = e || window.event;
+					e.preventDefault();
+					// calculate the new cursor position:
+					pos1 = pos3 - e.clientX;
+					pos2 = pos4 - e.clientY;
+					pos3 = e.clientX;
+					pos4 = e.clientY;
+					// set the element's new position:
+					elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+					elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+					
+
+					// change squares to yellow
+					
+					for (j = 12; j <= 502; j+=70){
+						for(i = 12; i <= 502; i+=70){
+							if(elmnt.offsetLeft - pos1 > (j-34) && elmnt.offsetLeft - pos1 < (j+34) &&
+								elmnt.offsetTop - pos2 > (i-34) && elmnt.offsetTop - pos2 < (i+34)) {
+									if (document.getElementById("" + j + "-" + i).style.backgroundColor != "white"){
+										if (elmnt.getAttribute("id").length == 2){
+											if (document.getElementById("" + j + "-" + i).getAttribute("id") == elmnt.getAttribute("upRightId")
+											|| document.getElementById("" + j + "-" + i).getAttribute("id") == elmnt.getAttribute("upLeftId"))
+												if(document.getElementById("" + j + "-" + i).getAttribute("idpiece") == -1)
+													document.getElementById("" + j + "-" + i).style.backgroundColor = "#FFFF00";
+										}
+										else {
+											if (document.getElementById("" + j + "-" + i).getAttribute("id") == elmnt.getAttribute("downRightId")
+											|| document.getElementById("" + j + "-" + i).getAttribute("id") == elmnt.getAttribute("downLeftId"))
+												if(document.getElementById("" + j + "-" + i).getAttribute("idpiece") == -1)
+													document.getElementById("" + j + "-" + i).style.backgroundColor = "#FFFF00";
+										}
+										
+											
+										// check if can jump piece up right
+										if (document.getElementById("" + elmnt.getAttribute("upRightId")) != null) {
+											if (document.getElementById("" + elmnt.getAttribute("upRightId")).getAttribute("idpiece").length == 1){
+												if (document.getElementById("" + document.getElementById("" + elmnt.getAttribute("upRightId")).getAttribute("idpiece")) != null) {
+													if (document.getElementById("" + j + "-" + i).getAttribute("id") == document.getElementById("" + document.getElementById("" + elmnt.getAttribute("upRightId")).getAttribute("idpiece")).getAttribute("upRightId")){
+														if(document.getElementById("" + j + "-" + i).getAttribute("idpiece") == -1)
+															document.getElementById("" + j + "-" + i).style.backgroundColor = "#FFFF00";
+													}
+												}
+											}
+										}
+
+										// check if can jump piece up left
+										if (document.getElementById("" + elmnt.getAttribute("upLeftId")) != null) {
+											if (document.getElementById("" + elmnt.getAttribute("upLeftId")).getAttribute("idpiece").length == 1){
+												if (document.getElementById("" + document.getElementById("" + elmnt.getAttribute("upLeftId")).getAttribute("idpiece")) != null) {
+													if (document.getElementById("" + j + "-" + i).getAttribute("id") == document.getElementById("" + document.getElementById("" + elmnt.getAttribute("upLeftId")).getAttribute("idpiece")).getAttribute("upLeftId")){
+														if(document.getElementById("" + j + "-" + i).getAttribute("idpiece") == -1)
+															document.getElementById("" + j + "-" + i).style.backgroundColor = "#FFFF00";
+													}
+												}
+											}
+										}	
+
+										// check if can jump piece down right
+										if (document.getElementById("" + elmnt.getAttribute("downRightId")) != null) {
+											if (document.getElementById("" + elmnt.getAttribute("downRightId")).getAttribute("idpiece").length == 2){
+												if (document.getElementById("" + document.getElementById("" + elmnt.getAttribute("downRightId")).getAttribute("idpiece")) != null) {
+													if (document.getElementById("" + j + "-" + i).getAttribute("id") == document.getElementById("" + document.getElementById("" + elmnt.getAttribute("downRightId")).getAttribute("idpiece")).getAttribute("downRightId")){
+														if(document.getElementById("" + j + "-" + i).getAttribute("idpiece") == -1)
+															document.getElementById("" + j + "-" + i).style.backgroundColor = "#FFFF00";
+													}
+												}
+											}
+										}
+
+										// check if can jump piece down left
+										if (document.getElementById("" + elmnt.getAttribute("downLeftId")) != null) {
+											if (document.getElementById("" + elmnt.getAttribute("downLeftId")).getAttribute("idpiece").length == 2){
+												if (document.getElementById("" + document.getElementById("" + elmnt.getAttribute("downLeftId")).getAttribute("idpiece")) != null) {
+													if (document.getElementById("" + j + "-" + i).getAttribute("id") == document.getElementById("" + document.getElementById("" + elmnt.getAttribute("downLeftId")).getAttribute("idpiece")).getAttribute("downLeftId")){
+														if(document.getElementById("" + j + "-" + i).getAttribute("idpiece") == -1)
+															document.getElementById("" + j + "-" + i).style.backgroundColor = "#FFFF00";
+													}
+												}
+											}
+										}	
+											
+									}
+
+							}
+							else {
+								if (document.getElementById("" + j + "-" + i).style.backgroundColor != "white")
+									document.getElementById("" + j + "-" + i).style.backgroundColor = "#72A172";
+							}
+						}
+
+					}
+				}
+
+				function closeDragElement() {
+					// stop moving when mouse button is released:
+					document.onmouseup = null;
+					document.onmousemove = null;
+					// algorithm for returning green squares to their original color
+					for (i = 12; i <= 502; i+=70){
+						for (j = 12; j <=502; j+=70){
+							if (document.getElementById("" + i + "-" + j).style.backgroundColor == "rgb(255, 255, 0)"){
+									document.getElementById("" + i + "-" + j).style.backgroundColor = "#72A172";
+									if(document.getElementById("" + i + "-" + j).getAttribute("idpiece") == -1){
+										correctSquareI = i;
+										correctSquareJ = j;
+										originalPos1 = 0;
+										originalPos2 = 0;
+									}
+									
+							}
+
+								
+						}
+					}
+					var sameSpot = 0;
+					if(originalPos1 == 0 && originalPos2 == 0){
+						elmnt.style.top = "" + correctSquareJ + "px";
+						elmnt.style.left = "" + correctSquareI + "px";
+						document.getElementById("" + correctSquareI + "-" + correctSquareJ).setAttribute("idpiece", elmnt.id);
+						document.getElementById(squareClickedID).setAttribute("idpiece", "-1");
+						sameSpot = 0;
+					}
+					else {
+						elmnt.style.top = originalPos1;
+						elmnt.style.left = originalPos2;
+						correctSquareI = originalSquarex;
+						correctSquareJ = originalSquarey;
+						sameSpot = 1;
+						
+					}
+					elmnt.style.zIndex = 1;
+
+					
+					if (!sameSpot){
+						if (document.getElementById("" + (correctSquareI-70) + "-" + (correctSquareJ+70)) != null)
+							elmnt.setAttribute("downLeftId", document.getElementById("" + (correctSquareI-70) + "-" + (correctSquareJ+70)).getAttribute("id"));
+						else 
+							elmnt.setAttribute("downLeftId", 0);
+							
+						if (document.getElementById("" + (correctSquareI+70) + "-" + (correctSquareJ+70)) != null)
+							elmnt.setAttribute("downRightId", document.getElementById("" + (correctSquareI+70) + "-" + (correctSquareJ+70)).getAttribute("id"));
+						else 
+							elmnt.setAttribute("downRightId", 0);
+							
+						if (document.getElementById("" + (correctSquareI+70) + "-" + (correctSquareJ-70)) != null)
+							elmnt.setAttribute("upRightId", document.getElementById("" + (correctSquareI+70) + "-" + (correctSquareJ-70)).getAttribute("id"));
+						else 
+							elmnt.setAttribute("upRightId", 0);
+							
+						if (document.getElementById("" + (correctSquareI-70) + "-" + (correctSquareJ-70)) != null)
+							elmnt.setAttribute("upLeftId", document.getElementById("" + (correctSquareI-70) + "-" + (correctSquareJ-70)).getAttribute("id"));
+						else 
+							elmnt.setAttribute("UpLeftId", 0);
+					}	
+
+					
+					// black piece jumping over piece handler
+					if (elmnt.getAttribute("id").length == 2){
+						//up left
+						if (pieceToRemove && pieceToRemove.getAttribute("id").length == 1){
+							
+							//console.log(pieceToRemove.getAttribute("id"));
+							//console.log(document.getElementById("" + elmnt.getAttribute("downRightId")).getAttribute("idpiece"));
+							if (document.getElementById("" + elmnt.getAttribute("downRightId")).getAttribute("idpiece") == pieceToRemove.getAttribute("id")){
+								console.log("remove piece");
+								pieceToRemove.parentNode.removeChild(pieceToRemove);
+								document.getElementById("" + elmnt.getAttribute("downRightId")).setAttribute("idpiece", -1);
+								
+							}
+						}
+						
+						//up right
+						if (pieceToRemoveUpRight && pieceToRemoveUpRight.getAttribute("id").length == 1){
+							
+							console.log(pieceToRemoveUpRight.getAttribute("id"));
+							console.log(document.getElementById("" + elmnt.getAttribute("downLeftId")).getAttribute("idpiece"));
+							if (document.getElementById("" + elmnt.getAttribute("downLeftId")).getAttribute("idpiece") == pieceToRemoveUpRight.getAttribute("id")){
+								console.log("remove piece");
+								pieceToRemoveUpRight.parentNode.removeChild(pieceToRemoveUpRight);
+								document.getElementById("" + elmnt.getAttribute("downLeftId")).setAttribute("idpiece", -1);
+								
+							}
+						}
+					}
+
+					// red piece jumping over piece handler
+					if (elmnt.getAttribute("id").length == 1){
+						//down left
+						if (pieceToRemoveDownLeft && pieceToRemoveDownLeft.getAttribute("id").length == 2){
+							if (document.getElementById("" + elmnt.getAttribute("upRightId")).getAttribute("idpiece") == pieceToRemoveDownLeft.getAttribute("id")){
+								console.log("remove piece");
+								pieceToRemoveDownLeft.parentNode.removeChild(pieceToRemoveDownLeft);
+								document.getElementById("" + elmnt.getAttribute("upRightId")).setAttribute("idpiece", -1);
+								
+							}
+						}
+						
+						//up right
+						if (pieceToRemoveDownRight && pieceToRemoveDownRight.getAttribute("id").length == 2){
+							if (document.getElementById("" + elmnt.getAttribute("upLeftId")).getAttribute("idpiece") == pieceToRemoveDownRight.getAttribute("id")){
+								console.log("remove piece");
+								pieceToRemoveDownRight.parentNode.removeChild(pieceToRemoveDownRight);
+								document.getElementById("" + elmnt.getAttribute("upLeftId")).setAttribute("idpiece", -1);
+								
+							}
+						}
+					}
+					
+				}
+			}
+    </script>
+    </body>
+</html>
